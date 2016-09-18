@@ -39,14 +39,14 @@
          "type":"string",
          "metadata":{  
             "description":"The Sku of the Gateway. This must be one of Basic, Standard or HighPerformance."
-         }
+         },
+         "defaultValue": "Basic"
       },
       "vpnClientAddressPoolPrefix":{  
          "type":"string",
          "metadata":{  
             "description":"The IP address range from which VPN clients will receive an IP address when connected. Range specified must not overlap with on-premise network."
-         },
-         "defaultValue": "VnetGw"
+         }
       },
       "clientRootCertName":{  
          "type":"string",
