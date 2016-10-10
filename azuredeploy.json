@@ -81,6 +81,7 @@
       "adAssetLocation": "https://raw.githubusercontent.com/yusaito001/PtoS/master/",
       "vnetwithDNSTemplateURL": "[concat(variables('adAssetLocation'),'/vnet-with-dns-server.json')]",
       "dnsServerPrivateIp": "10.0.0.4",
+      "updateVNetDNS1": "updateVNetDNS"
    },
    "resources":[
     {
