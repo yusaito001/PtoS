@@ -2,7 +2,7 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-	"virtualNetworkName": {
+	      "virtualNetworkName": {
             "value": "Vnet"
         },
         "gatewayPublicIPName": {
@@ -18,10 +18,14 @@
             "value": "192.168.100.16/28"
         },
         "gatewaySku": {
-	    "value": "Basic"
+	          "value": "Basic"
         },
         "vpnClientAddressPoolPrefix": {
-            "value": "10.10.8.0/24"
+        "value": "10.10.8.0/24"
         },
+        "subnetName": {
+        "value": "Subnet"
+        }
+    
     }
 }
