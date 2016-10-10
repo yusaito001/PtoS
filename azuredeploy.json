@@ -79,7 +79,7 @@
       "vnetID":"[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
       "gatewaySubnetRef": "[concat(variables('vnetID'),'/subnets/','GatewaySubnet')]",
       "adAssetLocation": "https://raw.githubusercontent.com/yusaito001/PtoS/master/",
-      "vnetwithDNSTemplateURL": "[concat(variables('adAssetLocation'),'/vnet-with-dns-server.json')]"
+      "vnetwithDNSTemplateURL": "[concat(variables('adAssetLocation'),'/vnet-with-dns-server.json')]",
       "dnsServerPrivateIp": "10.0.0.4",
    },
    "resources":[
