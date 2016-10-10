@@ -9,11 +9,24 @@
         },
        "defaultValue": "Vnet"
       },
+      "subnetPrefix": {
+          "type": "string",
+          "metadata": {
+              "description": "CIDR block for VM subnet, subset of azureVNetAddressPrefix address space"
+          }
+      },
       "vnetAddressPrefix":{  
          "type":"string",
          "metadata":{  
             "description":"Address space for the VNet."
          }
+      },
+      "subnetName": {
+          "type": "string",
+          "metadata": {
+              "description": "Arbitrary name for the Azure Subnet"
+          },
+        "defaultValue": "Subnet"
       },
       "gatewaySubnetPrefix":{  
          "type":"string",
@@ -59,12 +72,15 @@
          "metadata":{  
             "description":"Client root certificate data used to authenticate VPN clients."
          }
-      },
+      }
    },
    "variables":{  
       "apiVersion":"2015-06-15",
       "vnetID":"[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
-      "gatewaySubnetRef":"[concat(variables('vnetID'),'/subnets/','GatewaySubnet')]"
+      "gatewaySubnetRef": "[concat(variables('vnetID'),'/subnets/','GatewaySubnet')]",
+      "adAssetLocation": "https://raw.githubusercontent.com/yusaito001/PtoS/master/",
+      "vnetwithDNSTemplateURL": "[concat(variables('adAssetLocation'),'/vnet-with-dns-server.json')]"
+      "dnsServerPrivateIp": "10.0.0.4",
    },
    "resources":[
     {
@@ -79,6 +95,12 @@
           ]
         },
         "subnets": [
+          {
+              "name": "[parameters('subnetName')]",
+              "properties": {
+                "addressPrefix": "[parameters('subnetPrefix')]"
+              }
+          },
           {
             "name": "GatewaySubnet",
             "properties": {
@@ -96,6 +118,34 @@
       "properties": {
         "publicIPAllocationMethod": "Dynamic"
       }
+    },
+    {
+        "name": "[variables('updateVNetDNS1')]",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2016-02-01",
+        "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+                "uri": "[variables('vnetwithDNSTemplateURL')]",
+                "contentVersion": "1.0.0.0"
+            },
+            "parameters": {
+                "virtualNetworkName": {
+                    "value": "[parameters('virtualNetworkName')]"
+                },
+                "virtualNetworkAddressRange": {
+                    "value": "[parameters('vnetAddressPrefix')]"
+                },
+                "subnets": {
+                    "value": "[parameters('subnetName')]"
+                },
+                "dnsServerAddress": {
+                    "value": [
+                        "[variables('dnsServerPrivateIp')]"                            
+                    ]
+                }
+            }
+        }
     },
     {
       "apiVersion": "[variables('apiVersion')]",
